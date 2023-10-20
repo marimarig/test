@@ -7,6 +7,7 @@ on:
 
 jobs:
   build_apk_aab:
+    if: startsWith(github.head_ref, 'release/') == true
     name: Build release artifacts
     runs-on: ubuntu-20.04
     steps:
@@ -15,6 +16,7 @@ jobs:
         with: {java-version: 1.8}
       - name: Build release APK and AAB after test
         run: |
+          ./gradlew test
           ./gradlew assembleRelease
           ./gradlew bundleRelease
       - name: Upload APK
